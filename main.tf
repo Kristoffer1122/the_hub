@@ -81,24 +81,17 @@ resource "docker_image" "backend" {
 }
 
 resource "docker_container" "backend" {
-  image    = docker_image.backend.image_id
-  name     = var.backend_container_name
-  must_run = true
+  image        = docker_image.backend.image_id
+  name         = var.backend_container_name
+  must_run     = true
+  network_mode = "host"
   env = [
     "DB_USER=${var.db_user}",
     "DB_PASSWORD=${var.db_password}",
     "DB_PORT=${var.db_port}",
-    "DB_NAME=${var.db_name}"
+    "DB_NAME=${var.db_name}",
+    "DB_HOST=172.17.0.1"
   ]
-  ports {
-    internal = 7878
-    external = 7878
-  }
-
-  host {
-    host = "host.docker.internal"
-    ip   = "host-gateway"
-  }
 }
 
 # ============ Frontend ============
@@ -113,24 +106,16 @@ resource "docker_image" "frontend" {
 }
 
 resource "docker_container" "frontend" {
-  image    = docker_image.frontend.image_id
-  name     = var.frontend_container_name
-  must_run = true
+  image        = docker_image.frontend.image_id
+  name         = var.frontend_container_name
+  must_run     = true
+  network_mode = "host"
 
   depends_on = [docker_container.backend]
 
   env = [
     "AZURE_OPENAI_ENDPOINT=${var.azure_openai_endpoint}",
     "AZURE_OPENAI_DEPLOYMENT_NAME=${var.azure_openai_deployment_name}",
-    "BACKEND_URL=${var.backend_url}"
+    "BACKEND_URL=http://127.0.0.1:7878"
   ]
-  ports {
-    internal = 3000
-    external = 3000
-  }
-
-  host {
-    host = "host.docker.internal"
-    ip   = "host-gateway"
-  }
 }
