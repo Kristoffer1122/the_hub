@@ -90,7 +90,9 @@ resource "docker_container" "backend" {
     "DB_PASSWORD=${var.db_password}",
     "DB_PORT=${var.db_port}",
     "DB_NAME=${var.db_name}",
-    "DB_HOST=172.17.0.1"
+    "DB_HOST=host.docker.internal",
+    "AZURE_OPENAI_ENDPOINT=${var.azure_openai_endpoint}",
+    "AZURE_OPENAI_DEPLOYMENT_NAME=${var.azure_openai_deployment_name}"
   ]
 }
 
@@ -114,8 +116,6 @@ resource "docker_container" "frontend" {
   depends_on = [docker_container.backend]
 
   env = [
-    "AZURE_OPENAI_ENDPOINT=${var.azure_openai_endpoint}",
-    "AZURE_OPENAI_DEPLOYMENT_NAME=${var.azure_openai_deployment_name}",
-    "BACKEND_URL=http://127.0.0.1:7878"
+    "BACKEND_URL=http://host.docker.internal:7878"
   ]
 }
