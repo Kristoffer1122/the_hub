@@ -12,7 +12,7 @@ services:
     ports: 
      - "7878:7878"
     env_file:
-      - ./backend/.env
+      - ./backend/.env.docker
     build:
       context: ./backend
   db:
