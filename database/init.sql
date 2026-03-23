@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS thehub;
+CREATE USER IF NOT EXISTS 'thehubuser'@'%' IDENTIFIED BY 'password1';
+GRANT ALL PRIVILEGES ON thehub.* TO 'thehubuser'@'%';
+FLUSH PRIVILEGES;
