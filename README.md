@@ -30,6 +30,8 @@ This repository uses git submodules for the application code:
    | Backend    | 7878  |
    | MariaDB    | 3367  |
 
+   > **Note:** MariaDB is exposed on port 3367 (instead of the default 3306) to avoid conflicts with a local MariaDB instance.
+
 3. To stop the services:
    ```bash
    docker compose down
