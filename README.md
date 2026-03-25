@@ -36,3 +36,6 @@ This repository uses git submodules for the application code:
    ```bash
    docker compose down
    ```
+
+Privacy Policy:
+- https://www.shera.no/privacy-policy
