@@ -16,13 +16,12 @@ services:
       - ./backend/.env.docker
     build:
       context: ./backend
-      
+
   db:
     image: mariadb:latest
     restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: "password1"
-      MARIADB_DATABASE: thehub
+    env_file:
+      - ./db.env
     ports:
       - "3367:3306"
     volumes:
